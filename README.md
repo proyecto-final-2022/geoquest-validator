@@ -7,7 +7,7 @@ API REST para la gestión y validación de cupónes.
 
 ### Desarrollo:
 
-##### Requerimientos:
+#### Requerimientos:
 Para el desarrollo es necesario tener instalada la herramienta [Stack](https://docs.haskellstack.org/en/stable/install_and_upgrade/).
 
 Para el ultimo comando es necesario tener instalada la herramienta *ghcid*.
@@ -18,7 +18,7 @@ stack install ghcid
 - Tambien es util tener instalado el comando _make_ para no tener escribir el ultimo comando completo.
 
 
-##### Comandos utiles:
+#### Comandos utiles:
 
 ```
 stack build
