@@ -39,6 +39,9 @@ stack run
 ```
 make dev
 ```
-- Si no tienen instalado el comando _make_ pueden usar el comando completo: `ghcid -r --target=geoquest-validator:geoquest-validator-exe`.
+- Si no tienen instalado el comando _make_ pueden usar el comando completo:
+    ```
+    ghcid -r --target=geoquest-validator:geoquest-validator-exe
+    ```
 - Muy util para el desarrollo, levanta el servidor y se reinicia automaticamente cuando se hace una modificacion en el codigo.
 - No es necesario compilar ni ejecutar, el codigo se ejecuta en modo "interpretable".
