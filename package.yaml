@@ -20,9 +20,29 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+- Spock >= 0.14
+- text
+- aeson
+- mtl
+- http-types
+- cryptonite
+- bytestring
+- utf8-string
+- persistent
+- persistent-template
+- persistent-sqlite  # May not be needed in production
+- monad-logger
+- time
+- esqueleto
+- extra
+- memory
 
 default-extensions:
 - OverloadedStrings
+- RecordWildCards
+- DeriveGeneric
+- DeriveAnyClass
+- DeriveFunctor
 
 library:
   source-dirs: src
@@ -37,10 +57,6 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - geoquest-validator
-    - Spock >= 0.14
-    - text
-    - aeson
-    - mtl
 
 tests:
   geoquest-validator-test:

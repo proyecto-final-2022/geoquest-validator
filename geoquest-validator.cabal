@@ -24,15 +24,39 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      App
+      DB
+      Types
+      Utils
+      Validator
   other-modules:
       Paths_geoquest_validator
   hs-source-dirs:
       src
   default-extensions:
       OverloadedStrings
+      RecordWildCards
+      DeriveGeneric
+      DeriveAnyClass
+      DeriveFunctor
   build-depends:
-      base >=4.7 && <5
+      Spock >=0.14
+    , aeson
+    , base >=4.7 && <5
+    , bytestring
+    , cryptonite
+    , esqueleto
+    , extra
+    , http-types
+    , memory
+    , monad-logger
+    , mtl
+    , persistent
+    , persistent-sqlite
+    , persistent-template
+    , text
+    , time
+    , utf8-string
   default-language: Haskell2010
 
 executable geoquest-validator-exe
@@ -43,14 +67,30 @@ executable geoquest-validator-exe
       app
   default-extensions:
       OverloadedStrings
+      RecordWildCards
+      DeriveGeneric
+      DeriveAnyClass
+      DeriveFunctor
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       Spock >=0.14
     , aeson
     , base >=4.7 && <5
+    , bytestring
+    , cryptonite
+    , esqueleto
+    , extra
     , geoquest-validator
+    , http-types
+    , memory
+    , monad-logger
     , mtl
+    , persistent
+    , persistent-sqlite
+    , persistent-template
     , text
+    , time
+    , utf8-string
   default-language: Haskell2010
 
 test-suite geoquest-validator-test
@@ -62,8 +102,28 @@ test-suite geoquest-validator-test
       test
   default-extensions:
       OverloadedStrings
+      RecordWildCards
+      DeriveGeneric
+      DeriveAnyClass
+      DeriveFunctor
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      Spock >=0.14
+    , aeson
+    , base >=4.7 && <5
+    , bytestring
+    , cryptonite
+    , esqueleto
+    , extra
     , geoquest-validator
+    , http-types
+    , memory
+    , monad-logger
+    , mtl
+    , persistent
+    , persistent-sqlite
+    , persistent-template
+    , text
+    , time
+    , utf8-string
   default-language: Haskell2010

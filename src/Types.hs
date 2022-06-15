@@ -1,0 +1,32 @@
+module Types
+    ( Session (..)
+    , AppM
+    , AppActionM
+    , CouponHash (..)
+    , ErrorMessage (..)
+    ) where
+
+
+import Web.Spock
+import Web.Spock.Config
+import GHC.Generics
+import Data.Text
+import Data.Aeson
+import Database.Persist.Sql (SqlBackend)
+import Crypto.Hash
+
+
+data Session = EmptySession
+type AppM a = SpockM SqlBackend Session () a
+type AppActionM a = ActionCtxT () (WebStateM SqlBackend Session ()) a
+
+newtype CouponHash = CouponHash (Digest SHA256)
+    deriving (Show, Eq)
+
+newtype ErrorMessage = ErrorMessage Text
+    deriving (Show)
+
+instance ToJSON ErrorMessage where
+    toJSON (ErrorMessage msg) = object [ "message" .= msg ]
+            
+
