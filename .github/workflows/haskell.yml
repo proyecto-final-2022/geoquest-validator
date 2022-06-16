@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  CI:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,8 +19,26 @@ jobs:
           ghc-version: '8.10.7'
           enable-stack: true
           stack-version: 'latest'
+
+      - name: Cache ~/.stack
+        uses: actions/cache@v3
+        with:
+          path: ~/.stack
+          key: ${{ runner.os }}-stack-global-${{ hashFiles('stack.yaml') }}-${{ hashFiles('package.yaml') }}
+          # restore-keys: |
+          #   ${{ runner.os }}-stack-global-
+          
+      - name: Cache .stack-work
+        id: cache-stack-work
+        uses: actions/cache@v3
+        with:
+          path: .stack-work
+          key: ${{ runner.os }}-stack-work-${{ hashFiles('stack.yaml') }}-${{ hashFiles('package.yaml') }}-${{ hashFiles('**/*.hs') }}
+          # restore-keys: |
+          #   ${{ runner.os }}-stack-work-
           
       - name: Build Dependencies
+        if: steps.cache-stack-work.outputs.cache-hit != 'true'
         run: stack build --only-dependencies
         
       - name: Build
