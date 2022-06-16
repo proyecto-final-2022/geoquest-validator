@@ -39,22 +39,14 @@ isValidSpec = describe "isValid" $ do
     it "is true if all conditions are satisfied" $ do
         currentTime <- getCurrentTime
         let cId = toSqlKey 1
-        let coupon = Coupon { couponClientId = toSqlKey 10
-                            , couponDescription = "description"
-                            , couponExpirationDate = addDaysToUTCTime 1 currentTime
-                            , couponUsed = False
-                            }
+        coupon <- testCoupon False False
         let hash = hashCoupon cId coupon
         isValid cId hash coupon `shouldReturn` True
 
     it "is not true if the given hash differs from the coupon's calculated hash" $ do
         currentTime <- getCurrentTime
         let cId = toSqlKey 1
-        let coupon = Coupon { couponClientId = toSqlKey 10
-                            , couponDescription = "description"
-                            , couponExpirationDate = addDaysToUTCTime 1 currentTime
-                            , couponUsed = False
-                            }
+        coupon <- testCoupon False False
         let (Right hash) = hashFromText "0B894166D3336435C800BEA36FF21B29EAA801A52F584C006C49289A0DCF6E2F"
         isValid cId hash coupon `shouldReturn` False
 
@@ -62,21 +54,24 @@ isValidSpec = describe "isValid" $ do
     it "is not true if the coupon has already expired" $ do
         currentTime <- getCurrentTime
         let cId = toSqlKey 1
-        let coupon = Coupon { couponClientId = toSqlKey 10
-                            , couponDescription = "description"
-                            , couponExpirationDate = addDaysToUTCTime (-1) currentTime
-                            , couponUsed = False
-                            }
+        coupon <- testCoupon True False
         let hash = hashCoupon cId coupon
         isValid cId hash coupon `shouldReturn` False
 
     it "is not true if the coupon has already been used" $ do
         currentTime <- getCurrentTime
         let cId = toSqlKey 1
-        let coupon = Coupon { couponClientId = toSqlKey 10
-                            , couponDescription = "description"
-                            , couponExpirationDate = addDaysToUTCTime 1 currentTime
-                            , couponUsed = True
-                            }
+        coupon <- testCoupon False True
         let hash = hashCoupon cId coupon
         isValid cId hash coupon `shouldReturn` False
+
+    where
+        testCoupon expired used = do
+            currentTime <- getCurrentTime
+            let daysToAdd = if expired then (-1) else 1
+            pure Coupon { couponClientId = toSqlKey 10
+                        , couponDescription = "description"
+                        , couponExpirationDate = addDaysToUTCTime daysToAdd currentTime
+                        , couponUsed = used
+                        }
+   
