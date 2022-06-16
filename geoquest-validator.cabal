@@ -99,6 +99,7 @@ test-suite geoquest-validator-test
   other-modules:
       ArbitraryInstances
       TestUtils
+      UtilsSpec
       ValidatorSpec
       Paths_geoquest_validator
   hs-source-dirs:
