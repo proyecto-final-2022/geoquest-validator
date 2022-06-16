@@ -12,11 +12,10 @@ Para el desarrollo es necesario tener instalada la herramienta [Stack](https://d
 
 Para el ultimo comando es necesario tener instalada la herramienta *ghcid*.
 Para instalarla hay que ejecutar el siguiente comando por unica vez:
+- También es util tener instalado _make_ como shortcut para el ultimo comando.
 ```
 stack install ghcid
 ```
-- Tambien es util tener instalado el comando _make_ para no tener escribir el ultimo comando completo.
-
 
 #### Comandos utiles:
 
@@ -37,11 +36,11 @@ stack run
 - Es lo mismo que hacer `stack build && stack exec geoquest-validator-exe`.
 
 ```
-make dev
+ghcid
 ```
-- Si no tienen instalado el comando _make_ pueden usar el comando completo:
+- Si no tienen instalado _make_ pueden usar el comando completo:
     ```
-    ghcid -r --target=geoquest-validator:geoquest-validator-exe
+    ghcid --test ":main"
     ```
-- Muy util para el desarrollo, levanta el servidor y se reinicia automaticamente cuando se hace una modificacion en el codigo.
-- No es necesario compilar ni ejecutar, el codigo se ejecuta en modo "interpretable".
+- Muy util para el desarrollo, levanta el servidor (corre `Main.hs`) y automaticamente se reinicia cuando hacemos algun cambio.
+- No es necesario compilar ni ejecutar. Solo hay que dejarlo corriendo por atrás.

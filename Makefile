@@ -1,4 +1,5 @@
-.PHONY: dev
+.PHONY: dev_server
 
-dev:
-	ghcid -r --target=geoquest-validator:geoquest-validator-exe
+
+dev_server:
+	ghcid --test ":main"
