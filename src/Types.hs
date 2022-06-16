@@ -20,7 +20,7 @@ data Session = EmptySession
 type AppM a = SpockM SqlBackend Session () a
 type AppActionM a = ActionCtxT () (WebStateM SqlBackend Session ()) a
 
-newtype CouponHash = CouponHash (Digest SHA256)
+newtype CouponHash = CouponHash { couponHashDigest :: Digest SHA256 }
     deriving (Show, Eq)
 
 newtype ErrorMessage = ErrorMessage Text

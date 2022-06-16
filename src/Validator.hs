@@ -1,6 +1,8 @@
 module Validator
     ( checkCoupon
     , useCoupon
+    , hashCoupon
+    , isValid
     ) where
 
 
@@ -25,13 +27,13 @@ import Data.Int (Int64)
 checkCoupon :: CouponId -> CouponHash -> AppActionM ()
 checkCoupon id hash = do
     withDBAction "Coupon" (getCouponById id) $ \coupon -> do
-        validity <- isValid id hash coupon
+        validity <- liftIO $ isValid id hash coupon
         json $ object [ "isValid" .= validity ]  
 
 useCoupon :: CouponId -> CouponHash -> AppActionM ()
 useCoupon id hash = do
     withDBAction "Coupon" (getCouponById id) $ \coupon -> do
-        validity <- isValid id hash coupon
+        validity <- liftIO $ isValid id hash coupon
         if validity
         then notifyCouponUsage id
         else respondWithError Status.methodNotAllowed405 "Invalid coupon."
@@ -48,12 +50,12 @@ notifyCouponUsage :: CouponId -> AppActionM ()
 notifyCouponUsage id = runSQL . update id $ 
     [ CouponUsed =. True ]
 
-expired :: Coupon -> AppActionM Bool
+expired :: Coupon -> IO Bool
 expired Coupon{..} = do
-    time <- liftIO getCurrentTime
+    time <- getCurrentTime
     pure $ couponExpirationDate < time
 
-isValid :: CouponId -> CouponHash -> Coupon -> AppActionM Bool
+isValid :: CouponId -> CouponHash -> Coupon -> IO Bool
 isValid id hash coupon = do
     hasExpired <- const <$> expired coupon
     pure $ all ($ coupon)

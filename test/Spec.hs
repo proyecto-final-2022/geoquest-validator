@@ -1,2 +1,8 @@
+import Test.Hspec
+
+import qualified ValidatorSpec as Validator
+
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = hspec $ do
+    Validator.spec
