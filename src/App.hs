@@ -5,13 +5,9 @@ module App
 
 import Web.Spock
 import Web.Spock.Config
-import Data.Text
 import qualified Network.HTTP.Types.Status as Status
 import Control.Monad.Logger (runStdoutLoggingT)
 import Database.Persist.Sqlite hiding (get)
-import Data.Aeson (Value (String), eitherDecodeStrict)
-import Data.Bifunctor (Bifunctor(first))
-import Data.Text.Encoding (encodeUtf8)
 
 import Types
 import DB

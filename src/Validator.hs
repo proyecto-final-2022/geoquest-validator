@@ -8,18 +8,16 @@ module Validator
 
 import Types
 import DB
+import Utils (runSQL, respondWithError, withDBAction)
 
 import Crypto.Hash
-import Web.Spock (json, setStatus)
+import Web.Spock (json)
 import qualified Network.HTTP.Types.Status as Status
-import Utils (runSQLQuery, runSQL, respondWithError, withDBAction)
 import Data.Aeson (object, (.=))
 import Data.ByteString.UTF8 (fromString)
-import Database.Persist (Entity, get, update, (=.))
+import Database.Persist (get, update, (=.))
 import Data.Time (getCurrentTime)
 import Control.Monad.IO.Class (MonadIO(liftIO))
-import Data.Maybe (listToMaybe)
-import Data.Int (Int64)
 
 
 {- HANDLERS -}

@@ -12,15 +12,11 @@ module Utils
 
 
 import Network.HTTP.Types.Status (Status)
-import Types
 import Data.Text
-import Web.Spock (setStatus, json, runQuery, HasSpock (SpockConn))
-import Data.Aeson (ToJSON (toJSON), object, (.=))
-import Data.Maybe
-import Database.Persist.Sql (runSqlConn, SqlBackend, SqlPersistT, SqlReadT, Entity, liftPersist, PersistStoreRead (get), toSqlKey, PersistEntity, PersistRecordBackend)
+import Web.Spock (setStatus, json, runQuery)
+import Database.Persist.Sql (runSqlConn, SqlPersistT, SqlReadT, liftPersist)
 import Control.Monad.Logger (runStdoutLoggingT, LoggingT)
 import qualified Network.HTTP.Types.Status as Status
-import Data.Int (Int64)
 import Crypto.Hash (digestFromByteString, Digest, SHA256)
 import Data.Either.Extra (maybeToEither)
 import Data.Text.Encoding (encodeUtf8)
@@ -28,6 +24,7 @@ import Data.ByteArray.Encoding (convertFromBase, Base (Base16))
 import Data.Bifunctor (first)
 import Data.ByteString hiding (pack)
 
+import Types
 
 respondWithError :: Status -> Text -> AppActionM ()
 respondWithError status message = do

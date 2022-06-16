@@ -8,8 +8,6 @@ module Types
 
 
 import Web.Spock
-import Web.Spock.Config
-import GHC.Generics
 import Data.Text
 import Data.Aeson
 import Database.Persist.Sql (SqlBackend)
