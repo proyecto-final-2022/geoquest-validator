@@ -1,5 +1,7 @@
 # GeoQuest Validator
 
+[![Haskell CI](https://github.com/proyecto-final-2022/geoquest-validator/actions/workflows/haskell.yml/badge.svg)](https://github.com/proyecto-final-2022/geoquest-validator/actions/workflows/haskell.yml)
+
 ### Descripción:
 
 API REST para la gestión y validación de cupónes.
