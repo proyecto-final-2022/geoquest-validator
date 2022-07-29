@@ -59,8 +59,6 @@ expired Coupon{..} = do
 isValid :: CouponId -> CouponHash -> Coupon -> IO Bool
 isValid id hash coupon = do
     hasExpired <- const <$> expired coupon
-    print $ couponTextLine id coupon
-    print $ hashCoupon id coupon
     pure $ all ($ coupon)
         [ matchesPrecalculatedHash id hash
         , not . couponUsed
