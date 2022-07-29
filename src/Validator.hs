@@ -14,10 +14,13 @@ import Crypto.Hash
 import Web.Spock (json)
 import qualified Network.HTTP.Types.Status as Status
 import Data.Aeson (object, (.=))
-import Data.ByteString.UTF8 (fromString)
+import Data.ByteString.UTF8 (fromString, ByteString)
 import Database.Persist (get, update, (=.))
 import Data.Time (getCurrentTime)
 import Control.Monad.IO.Class (MonadIO(liftIO))
+import Database.Persist.Sql (BackendKey(unSqlBackendKey))
+import Data.Char (toLower)
+import qualified Data.Text as Text
 
 
 {- HANDLERS -}
@@ -56,6 +59,8 @@ expired Coupon{..} = do
 isValid :: CouponId -> CouponHash -> Coupon -> IO Bool
 isValid id hash coupon = do
     hasExpired <- const <$> expired coupon
+    print $ couponTextLine id coupon
+    print $ hashCoupon id coupon
     pure $ all ($ coupon)
         [ matchesPrecalculatedHash id hash
         , not . couponUsed
@@ -65,12 +70,17 @@ isValid id hash coupon = do
 
 -- PURE FUNCTIONS 
 
+couponTextLine :: CouponId -> Coupon -> ByteString
+couponTextLine id Coupon{..} = fromString . map toLower $ show rawCouponId
+                                                       ++ show rawClientId
+                                                       ++ Text.unpack couponDescription
+                                                       ++ show couponUsed
+    where
+        rawCouponId = unSqlBackendKey . unCouponKey $ id
+        rawClientId = unSqlBackendKey . unClientKey $ couponClientId
+
 hashCoupon :: CouponId -> Coupon -> CouponHash
-hashCoupon id Coupon{..} = CouponHash $ hash couponTextLine
-    where couponTextLine = fromString $ show id
-                                     ++ show couponClientId
-                                     ++ show couponDescription
-                                     ++ show couponUsed
+hashCoupon id = CouponHash . hash . couponTextLine id
 
 matchesPrecalculatedHash :: CouponId -> CouponHash -> Coupon -> Bool
 matchesPrecalculatedHash id hash coupon = hashCoupon id coupon == hash
