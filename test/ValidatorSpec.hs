@@ -70,6 +70,7 @@ isValidSpec = describe "isValid" $ do
             currentTime <- getCurrentTime
             let daysToAdd = if expired then (-1) else 1
             pure Coupon { couponClientId = toSqlKey 10
+                        , couponUserId = 10
                         , couponDescription = "description"
                         , couponExpirationDate = addDaysToUTCTime daysToAdd currentTime
                         , couponUsed = used

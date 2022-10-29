@@ -31,10 +31,12 @@ instance Arbitrary UTCTime where
 instance Arbitrary Coupon where
     arbitrary = do
         clientId <- arbitrary    
+        userId <- arbitrary
         expirationDate <- arbitrary
         description <- arbitrary
         used <- arbitrary
         pure $ Coupon { couponClientId = clientId
+                      , couponUserId = userId
                       , couponExpirationDate = expirationDate
                       , couponDescription = description
                       , couponUsed = used
