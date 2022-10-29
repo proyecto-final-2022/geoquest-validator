@@ -29,7 +29,7 @@ checkCoupon :: CouponId -> CouponHash -> AppActionM ()
 checkCoupon id hash = do
     withDBAction "Coupon" (getCouponById id) $ \coupon -> do
         validity <- liftIO $ isValid id hash coupon
-        json $ object [ "isValid" .= validity ]  
+        json $ object [ "isValid" .= validity ]
 
 useCoupon :: CouponId -> CouponHash -> AppActionM ()
 useCoupon id hash = do
@@ -48,7 +48,7 @@ getCouponById :: CouponId -> AppActionM (Maybe Coupon)
 getCouponById = runSQL . get
 
 notifyCouponUsage :: CouponId -> AppActionM ()
-notifyCouponUsage id = runSQL . update id $ 
+notifyCouponUsage id = runSQL . update id $
     [ CouponUsed =. True ]
 
 expired :: Coupon -> IO Bool
@@ -58,18 +58,19 @@ expired Coupon{..} = do
 
 isValid :: CouponId -> CouponHash -> Coupon -> IO Bool
 isValid id hash coupon = do
-    hasExpired <- const <$> expired coupon
-    pure $ all ($ coupon)
-        [ matchesPrecalculatedHash id hash
-        , not . couponUsed
-        , not . hasExpired
-        ]
-    
+    notExpired <- not <$> expired coupon
+
+    let matchesHash = matchesPrecalculatedHash id hash coupon
+    let notUsed     = not . couponUsed $ coupon
+
+    pure $ matchesHash && notUsed && notExpired
+
 
 -- PURE FUNCTIONS 
 
 couponTextLine :: CouponId -> Coupon -> ByteString
 couponTextLine id Coupon{..} = fromString . map toLower $ show rawCouponId
+                                                       ++ show couponUserId
                                                        ++ show rawClientId
                                                        ++ Text.unpack couponDescription
                                                        ++ show couponUsed

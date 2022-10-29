@@ -17,10 +17,12 @@ import Database.Persist
 import Database.Persist.TH
 import Data.Text
 import Data.Time (UTCTime)
+import Data.Int (Int64)
 
 
 share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
     Coupon sql=coupons
+        userId         Int64
         clientId       ClientId
         description    Text
         expirationDate UTCTime
@@ -29,6 +31,7 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 
     Client sql=clients
         name           Text
+        image          Text
         deriving Show
 |]
 

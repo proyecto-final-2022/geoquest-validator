@@ -30,12 +30,14 @@ dependencies:
 - utf8-string
 - persistent
 - persistent-template
+- persistent-mysql
 - persistent-sqlite  # May not be needed in production
 - monad-logger
 - time
 - esqueleto
 - extra
 - memory
+- dotenv
 
 default-extensions:
 - OverloadedStrings

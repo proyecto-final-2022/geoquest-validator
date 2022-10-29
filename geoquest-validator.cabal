@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -45,6 +45,7 @@ library
     , base >=4.7 && <5
     , bytestring
     , cryptonite
+    , dotenv
     , esqueleto
     , extra
     , http-types
@@ -52,6 +53,7 @@ library
     , monad-logger
     , mtl
     , persistent
+    , persistent-mysql
     , persistent-sqlite
     , persistent-template
     , text
@@ -78,6 +80,7 @@ executable geoquest-validator-exe
     , base >=4.7 && <5
     , bytestring
     , cryptonite
+    , dotenv
     , esqueleto
     , extra
     , geoquest-validator
@@ -86,6 +89,7 @@ executable geoquest-validator-exe
     , monad-logger
     , mtl
     , persistent
+    , persistent-mysql
     , persistent-sqlite
     , persistent-template
     , text
@@ -118,6 +122,7 @@ test-suite geoquest-validator-test
     , base >=4.7 && <5
     , bytestring
     , cryptonite
+    , dotenv
     , esqueleto
     , extra
     , geoquest-validator
@@ -127,6 +132,7 @@ test-suite geoquest-validator-test
     , monad-logger
     , mtl
     , persistent
+    , persistent-mysql
     , persistent-sqlite
     , persistent-template
     , text

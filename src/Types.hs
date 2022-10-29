@@ -12,6 +12,7 @@ import Data.Text
 import Data.Aeson
 import Database.Persist.Sql (SqlBackend)
 import Crypto.Hash
+import Database.Persist.MySQL (ConnectInfo (..), defaultConnectInfo)
 
 
 data Session = EmptySession
@@ -27,4 +28,16 @@ newtype ErrorMessage = ErrorMessage Text
 instance ToJSON ErrorMessage where
     toJSON (ErrorMessage msg) = object [ "message" .= msg ]
             
-
+instance FromJSON ConnectInfo where
+    parseJSON = withObject "ConnectInfo" $ \o -> do
+        user     <- o .: "username"
+        password <- o .: "password"
+        database <- o .: "database"
+        host     <- o .: "host"
+        port     <- o .: "port"
+        pure $ defaultConnectInfo { connectUser     = user
+                                  , connectPassword = password
+                                  , connectDatabase = database
+                                  , connectHost     = host
+                                  , connectPort     = port 
+                                  }

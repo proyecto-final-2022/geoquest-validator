@@ -1,5 +1,6 @@
 FROM haskell:8.10.7
 
+RUN sudo apt install libpcre3 libpcre3-dev libmysqlclient-dev
 
 COPY ["./stack.yaml", "./package.yaml", "./app/"]
 
