@@ -10,7 +10,7 @@ API REST para la gestión y validación de cupónes.
 ### Desarrollo:
 
 #### Requerimientos:
-Para el desarrollo es necesario tener instalada la herramienta [Stack](https://docs.haskellstack.org/en/stable/install_and_upgrade/).
+Para el desarrollo es necesario tener instalada la herramienta *Stack*, para esto recomendamos instalar [GHCup](https://www.haskell.org/ghcup/install/#installation) que incluye esta herramienta ademas de otras funcionalidades utiles.
 
 Para el ultimo comando es necesario tener instalada la herramienta *ghcid*.
 Para instalarla hay que ejecutar el siguiente comando por unica vez:
